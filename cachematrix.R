@@ -2,11 +2,11 @@
 ## functions do
 
 ## This function creates a special "matrix" object that can cache its inverse
-## This function contains list of four functions
-## 1. set the matrix
-## 2. get the matrix
-## 3. set the inverse of the matrix
-## 4. get the inversed matrix
+## This function retruns list of four wraped functions
+## 1. set matrix
+## 2. get matrix
+## 3. set/calc inverse of the matrix
+## 4. get inversed matrix
 
 makeCacheMatrix <- function(x = matrix()) {
     ## initializing inverse matrix to NULL
@@ -14,30 +14,32 @@ makeCacheMatrix <- function(x = matrix()) {
     ## set function to cache matrix and inverse matrix (initialized to NULL)
     set <- function(y) {
         x <<- y
+        ##inv_x <<- NULL
         inv_x <<- NULL
     }
     ## get function to retrive matrix from cache
     get <- function() x
-    ## setinverse function computes inverse matrix & cache it
+    ## setinverse function to compute inverse matrix & cache it
     ## uses solve function of R to compute inverse matrix
     setinverse <- function(solve) inv_x <<- solve
     ## getinverse function to retrive inverse matrix from cache
     getinverse <- function() inv_x
-    ## list object with all four functions of makeCacheMatrix
+    ## returns list containing four functions
     list(set = set, get = get, setinverse = setinverse, 
          getinverse = getinverse)
 }
 
 
-## This function computes, retrives and sets inverse matrix
+## This function
 ## 1. retruns the inverse matrix from cache if already been calculated
 ## 2. else computes inverse of the special "matrix" returned by makeCacheMatrix
 
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
-    
-    ## checking for already computed inverse by checking for NULL value
+    ## Retrieves inverse matrix using makeCacheMatrix list functions
+    inv_x <- x$getinverse()
+    ## checking for already computed inverse
     if(!is.null(inv_x)) {
+        ## if inverse matrix variable contains NULL value
         message("getting cached data")
         ## return the cached inverse matrix
         return(inv_x)
